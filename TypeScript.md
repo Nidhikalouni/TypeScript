@@ -381,3 +381,87 @@ class Employee implements Person {
 let emp = new Employee("Nidhi");
 emp.greet(); // Hello Nidhi
 ```
+# ⭐ Type Aliases in TypeScript
+Definition:
+A type alias allows you to create a custom name for any type in TypeScript.
+You use the type keyword to define:
+- Primitive types
+- Object types
+- Union types
+- Function types
+- Tuple types
+- Intersection types
+
+Basically → type can name any type.
+
+### ✅ 1. Basic Type Alias
+```ts
+type Name = string;
+let userName: Name = "Nidhi";
+```
+### 2. Type Alias for Object
+```ts
+type User = {
+  id: number;
+  name: string;
+};
+
+let u1: User = {
+  id: 1,
+  name: "Nidhi"
+};
+```
+### ✅ 3. Type Alias for Union Types
+```ts
+type ID = number | string;
+let userId: ID = 101;
+let orderId: ID = "ORD123";
+```
+Union means: value can be one of several types.
+
+### ✅ 4. Type Alias for Function Types
+```ts
+type Add = (a: number, b: number) => number;
+const sum: Add = (x, y) => x + y;
+```
+### ✅ 5. Type Alias for Tuple
+```ts
+type PersonTuple = [string, number];
+let p: PersonTuple = ["Nidhi", 22];
+```
+### ✅ 6. Type Alias with Intersection Types
+
+Combine multiple types:
+```ts
+type Person = {
+  name: string;
+};
+type Employee = {
+  salary: number;
+};
+type Staff = Person & Employee;
+
+let s: Staff = {
+  name: "Nidhi",
+  salary: 50000
+};
+``` 
+# ⭐ Difference Between Type Alias & Interface
+<img width="1000" height="351" alt="image" src="https://github.com/user-attachments/assets/398c61b7-27bc-490b-8394-adfaa0bb2032" />
+
+## ⭐ When to Use What?
+ Use interface when:
+
+- You are defining object shapes
+- You need extendable structure
+- A class will implement it
+  
+ Use type alias when:
+- You need union, intersection
+- You define primitive or function types
+- You want more flexibility
+
+🎯 In One Line
+
+👉 interface = object structure
+👉 type = can define ANY type (unions, primitives, objects, tuples, etc.)
