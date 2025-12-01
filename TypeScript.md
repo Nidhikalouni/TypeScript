@@ -20,7 +20,7 @@ Basic, immutable values.
    let name: string = "Nishu";
    let age: number = 22;
    let isOk: boolean = true;
-```
+   ```
 
 Reference Types
 Store address/reference, not value.
@@ -29,9 +29,7 @@ Store address/reference, not value.
 - functions
 
 ```ts
-
 let obj: {name: string} = { name: "Nidhi" };
-
 ```
 
   ## Arrays
