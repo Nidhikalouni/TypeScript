@@ -27,8 +27,11 @@ Store address/reference, not value.
 - objects
 - arrays
 - functions
+
 ```ts
+
 let obj: {name: string} = { name: "Nidhi" };
+
 ```
 
   ## Arrays
