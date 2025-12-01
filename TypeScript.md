@@ -465,3 +465,182 @@ let s: Staff = {
 
 👉 interface = object structure
 👉 type = can define ANY type (unions, primitives, objects, tuples, etc.)
+
+# ⭐ Classes and Objects in TypeScript
+
+A class is a blueprint for creating objects.
+An object is an instance of a class.
+
+### 🔹 1. Class Definition
+```ts
+class Person {
+  name: string;
+  age: number;
+
+  showInfo() {
+    console.log(this.name, this.age);
+  }
+}
+```
+### 🔹 2. Creating Objects
+```ts
+let p1 = new Person();
+p1.name = "Nidhi";
+p1.age = 22;
+p1.showInfo();
+```
+### 🔹 3. Constructor
+
+A constructor runs automatically when an object is created.
+```ts
+class Person {
+  name: string;
+  age: number;
+
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+let p = new Person("Nidhi", 22);
+```
+### 🔹 4. this Keyword
+
+Refers to the current object
+Used to access class properties & methods
+```ts
+class Car {
+  model: string;
+
+  constructor(model: string) {
+    this.model = model; // refers to the current object's model
+  }
+}
+```
+
+### 🔹 5. Access Modifiers
+- Modifier	Meaning
+- public	Accessible everywhere (default)
+- private	Accessible ONLY inside the class
+- protected	Accessible inside class + child classes
+Example:
+```ts
+class Person {
+  public name: string;
+  private age: number;
+  protected salary: number;
+}
+```
+### 🔹 6. Readonly Properties
+
+You cannot change them after initialization.
+```ts
+class Student {
+  readonly rollNo: number;
+
+  constructor(rollNo: number) {
+    this.rollNo = rollNo;
+  }
+}
+
+let s = new Student(101);
+s.rollNo = 102; // ❌ Error
+```
+### 🔹 7. Optional Properties
+
+Use ? inside class:
+```ts
+class Person {
+  name: string;
+  age?: number; // optional
+}
+
+let p = new Person();
+p.name = "Nidhi";   // OK
+p.age = 22;         // OK
+```
+### 🔹 8. Parameter Properties 
+
+TS provides a shortcut to declare + assign properties directly inside constructor.
+```ts
+class Person {
+  constructor(public name: string, private age: number) {}
+}
+
+let p = new Person("Nidhi", 22);
+```
+This single line:
+constructor(public name: string, private age: number) {}
+means:
+- Create property name
+- Create property age
+- Assign values
+- Set access modifiers
+
+### 🔹 9. Getters and Setters
+
+Used to control access to private properties.
+```ts
+class Employee {
+  private _salary: number;
+
+  constructor(salary: number) {
+    this._salary = salary;
+  }
+
+  get salary() {
+    return this._salary;
+  }
+
+  set salary(value: number) {
+    if (value > 0) this._salary = value;
+  }
+}
+
+let e = new Employee(50000);
+console.log(e.salary); // getter
+e.salary = 60000;      // setter
+```
+### 🔹 10. Static Members
+
+static properties belong to the class itself, not the objects.
+```ts
+class Student {
+  static collegeName = "DBUU";
+
+  static getCollege() {
+    return Student.collegeName;
+  }
+}
+
+console.log(Student.getCollege());
+```
+### 🔹 11. Abstract Classes & Methods
+
+Used as a base class → cannot be instantiated directly.
+
+Abstract Class
+```ts
+abstract class Shape {
+  abstract area(): number; // abstract method
+
+  show() {
+    console.log("Shape");
+  }
+}
+
+Child Class must implement abstract methods
+class Circle extends Shape {
+  constructor(public radius: number) {
+    super();
+  }
+
+  area() {
+    return Math.PI * this.radius * this.radius;
+  }
+}
+
+let c = new Circle(5);
+console.log(c.area());
+```
