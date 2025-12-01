@@ -81,3 +81,303 @@ No warnings → runtime crash → unsafe.
 
 - 🔥 In One Line
 any = turn off TypeScript’s type checking completely → maximum flexibility but minimum safety.
+# UNKNOWN
+The unknown type represents a value whose type is not known at the time of writing the code, but unlike any, it does NOT allow unsafe operations.
+It is the type-safe version of any.
+⭐ Key Properties of unknown
+✔ 1. You can assign anything to unknown
+```ts
+let value: unknown;
+value = "Hello";
+value = 42;
+value = true;
+value = { name: "Nidhi" };
+```
+✔ 2. But you cannot use the value without checking its type first
+```
+let data: unknown = "abc";
+// ❌ Error: Cannot call method on unknown
+data.toUpperCase();
+```
+⭐ To use an unknown variable → You Must Do Type Narrowing
+```ts
+let data: unknown = "Hello";
+if (typeof data === "string") {
+  console.log(data.toUpperCase()); // ✔ safe
+}
+```
+###  unknown vs any 
+<img width="1138" height="287" alt="image" src="https://github.com/user-attachments/assets/7dcc0ee3-f0fc-43f2-be60-fd5e2c57e1cd" />
+Example:
+```ts
+let a: any = "hello";
+a.trim();     // ✔ No error (unsafe)
+let b: unknown = "hello";
+b.trim();     // ❌ Error (must narrow type first)
+```
+⭐ Use Cases of unknown
+
+ Use unknown when:
+ -You are working with API data that may vary.
+ You truly don’t know the type yet.
+ You want flexibility with safety.
+
+🔥 In One Line
+unknown = safer alternative to any, flexible but requires type checking before use.
+
+# VOID
+The void type is used to represent the absence of a value.
+✔ Mainly used for:
+- Functions that do not return anything
+- Rarely used for variables (not recommended)
+
+#### ⭐ 1. void in Functions 
+A function with return type void does not return a value.
+```ts
+function greet(): void {
+  console.log("Hello, Nidhi!");
+}
+```
+
+✔ This tells TypeScript:
+“This function performs an action but does NOT return anything.”
+
+If you try to return something, TS will give an error:
+```ts
+function test(): void {
+  return 10;  // ❌ Error
+}
+```
+#### ⭐ 2. void with variables (not useful)
+```ts
+let x: void = undefined;   // ✔ allowed
+let y: void = null;        // ✔ allowed in non-strict mode
+```
+But variables of type void are not practical because they can only hold undefined (or null).
+So we rarely use this.
+⭐ Why void is important?
+Because it clearly tells other developers:
+👉 This function is for performing an operation, not giving a result.
+Example: logging, printing, saving to DB, updating UI, etc.
+## ⭐ Difference between void vs never (quick)
+Type	Meaning
+void	Function does not return a value
+never	Function never returns at all (infinite loop / throws error)
+# NULL
+null is a primitive type in TypeScript that represents
+👉 intentional absence of a value
+or
+👉 empty value.
+It explicitly means:
+“There is no value here.”
+
+⭐ Example
+```ts
+let user: string | null = null;
+```
+Here, user intentionally has no value.
+# UNDEFINED
+undefined is a primitive type in TypeScript that represents:
+👉 a variable that has been declared but not assigned a value yet
+It means:
+“Value is missing because nothing was assigned.”
+```ts
+let x;
+console.log(x);  // undefined
+```
+Since x has no value, JavaScript automatically sets it to undefined.
+# Difference b/w NULL & UNDEFINED
+<img width="987" height="483" alt="image" src="https://github.com/user-attachments/assets/18d5e140-ffd1-4a94-919d-20350f3a79ae" />
+
+# NEVER
+never is a special type that represents a value that never occurs.
+
+✔ It means:
+- The function never returns
+- The code never reaches that point
+- A variable cannot have any possible value
+
+## 🔥 Where is never used?
+1. Functions that never return
+Example: Functions that always throw an error.
+```ts
+function throwError(msg: string): never {
+  throw new Error(msg);
+}
+```
+This returns nothing, not even void, because it never finishes.
+
+2. Infinite loops
+```ts
+function infiniteLoop(): never {
+  while (true) {}
+}
+```
+This function never ends, so the return type is never.
+
+# Type Inference in TypeScript
+Type inference means:
+➡️ TypeScript automatically figures out the type of a variable without you explicitly writing it.
+You don’t need to write:
+```ts
+let x: number = 10;
+TypeScript can infer it:
+let x = 10;   // TS infers: number
+```
+🔥 1. Variable Type Inference
+let message = "Hello";
+TypeScript infers:
+message is a string
+You cannot assign anything else:
+message = 10;   // ❌ Error
+
+🔥 2. Function Return Type Inference
+
+You don’t need to specify return type:
+```ts
+function add(a: number, b: number) {
+  return a + b;
+}
+```
+TS infers return type as:
+➡️ number
+
+#  Type Annotations in TypeScript
+Type Annotation means:
+➡️ You explicitly tell TypeScript what the type of a variable, function parameter, or return value is.
+You write the type manually.
+
+Example:
+```ts
+let age: number = 20;
+```
+Here : number is the type annotation.
+##### ✨ Why do we use Type Annotations?
+
+✔ To make code more readable
+✔ To avoid mistakes
+✔ When TypeScript cannot infer the type automatically
+✔ Useful in functions, objects, variables, arrays, parameters, classes, etc.
+#### Type annotations are used to specify types manually.
+They can be added to:
+- ✔ Variables
+- ✔ Functions (parameters + return type)
+- ✔ Arrays
+- ✔ Tuples
+- ✔ Objects
+- ✔ Class properties
+- ✔ Function variables
+- ✔ Interfaces & Type Aliases
+
+# ⭐ Interfaces in TypeScript
+Definition:
+An interface in TypeScript is used to define the shape of an object.
+It specifies what properties and methods an object should have.
+Think of it as a contract — any object implementing an interface must follow the defined structure.
+## 🔹 1. Basic Interface Example
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+let user: Person = {
+  name: "Nidhi",
+  age: 22
+};
+```
+Here, user must have name (string) and age (number), otherwise TypeScript throws an error.
+
+## 🔹 2. Optional Properties
+
+Add ? to make a property optional:
+```ts
+interface Person {
+  name: string;
+  age?: number; // optional
+}
+
+let user1: Person = { name: "Aman" }; // ✔ valid
+let user2: Person = { name: "Nidhi", age: 22 }; // ✔ valid
+```
+## 🔹 3. Readonly Properties
+Make properties read-only (cannot be changed after initialization):
+```ts
+interface Person {
+  readonly id: number;
+  name: string;
+}
+
+let user: Person = { id: 101, name: "Nidhi" };
+user.id = 102; // ❌ Error
+```
+## 🔹 4. Methods in Interface
+Interfaces can define methods as well:
+```ts
+interface Person {
+  name: string;
+  age: number;
+  greet(): void;
+}
+
+let user: Person = {
+  name: "Nidhi",
+  age: 22,
+  greet() {
+    console.log("Hello " + this.name);
+  }
+};
+```
+## 🔹 5. Extending Interfaces
+
+Interfaces can inherit from other interfaces using extends.
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Employee extends Person {
+  salary: number;
+}
+
+let emp: Employee = {
+  name: "Nidhi",
+  age: 22,
+  salary: 50000
+};
+```
+## 🔹 6. Interface Merging
+
+If two interfaces have the same name, TypeScript merges them automatically:
+```ts
+interface User {
+  name: string;
+}
+
+interface User {
+  age: number;
+}
+
+let u: User = { name: "Nidhi", age: 22 }; // ✔ merged interface
+```
+## 🔹 7. Implementing Interfaces in Classes
+
+A class can implement an interface to ensure it follows the structure.
+```ts
+interface Person {
+  name: string;
+  greet(): void;
+}
+
+class Employee implements Person {
+  constructor(public name: string) {}
+  
+  greet() {
+    console.log("Hello " + this.name);
+  }
+}
+
+let emp = new Employee("Nidhi");
+emp.greet(); // Hello Nidhi
+```
