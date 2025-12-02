@@ -644,3 +644,114 @@ class Circle extends Shape {
 let c = new Circle(5);
 console.log(c.area());
 ```
+
+
+#  1. Functions in TypeScript
+
+A function in TypeScript works like JavaScript but includes type checking for
+- Parameters
+- Return values
+
+✔ Example:
+```ts
+function greet(name: string): string {
+  return "Hello " + name;
+}
+```
+Key Points:
+name: string → parameter 
+type: string → return type
+You cannot return a number if return type is string
+TS catches mistakes at compile time
+
+# ✅ 2. Function Type (Function Signature)
+
+A function type describes what a function should look like:
+→ What parameters it accepts
+→ What its return type is
+
+It helps when assigning functions to variables.
+
+✔ Example:
+```ts
+let calculate: (x: number, y: number) => number;
+calculate = (a, b) => a + b;   // ✔ valid
+calculate = (a, b) => a + b + ""; // ❌ error (string return)
+```
+Why use it?
+- Gives structure
+- Prevents assigning wrong functions
+- Used heavily in callbacks, React, higher-order functions
+
+# ✅ 3. Optional Parameter (?)
+
+An optional parameter does not need to be passed when calling the function.
+
+✔ Example:
+```ts
+function print(name: string, age?: number) {
+  console.log(name, age);
+}
+print("Nidhi");        // OK
+print("Nidhi", 22);    // OK
+```
+Rules:
+- Use ? to mark as optional
+- Optional parameters must come after required parameters
+
+# ✅ 4. Default Parameter
+
+A default parameter has a fallback value, used when that parameter is not passed.
+```ts
+✔ Example:
+function multiply(a: number, b: number = 2) {
+  return a * b;
+}
+multiply(5);     // 10 (uses default 2)
+multiply(5, 4);  // 20
+```
+Difference from optional:
+Optional	Default
+Can be undefined	Never undefined (gets default value)
+No automatic value	Has fallback value
+# ✅ 5. Rest Parameter (...)
+
+Used when you don't know how many arguments will be passed.
+```ts
+✔ Example:
+function sum(...nums: number[]) {
+  return nums.reduce((a, b) => a + b, 0);
+}
+sum(1, 2, 3);        // 6
+sum(10, 20, 30, 40); // 100
+``
+Rules:
+
+- Rest parameter must be the last parameter
+- Type is always an array
+
+# ✅ 6. Function Overloading
+
+TypeScript allows multiple function signatures for one function.
+This lets the same function accept different types of inputs.
+```ts
+✔ Example:
+function show(x: string): string;
+function show(x: number): number;
+
+function show(x: any) {
+  return x;
+}
+```
+Explanation:
+
+- First two lines are overload signatures
+- Last function is actual implementation
+- Only the overload types are allowed: string or number
+
+Wrong usage:
+show(true);   // ❌ Error -> boolean is not in overload list
+Why use overloads?
+When the same function should behave differently based on input type
+Common in libraries (e.g., arrays, DOM, React)
+Helps with strong type safety
