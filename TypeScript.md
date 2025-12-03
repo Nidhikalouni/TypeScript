@@ -724,7 +724,7 @@ function sum(...nums: number[]) {
 }
 sum(1, 2, 3);        // 6
 sum(10, 20, 30, 40); // 100
-``
+```
 Rules:
 
 - Rest parameter must be the last parameter
